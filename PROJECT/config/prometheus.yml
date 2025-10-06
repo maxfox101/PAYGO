@@ -1,0 +1,317 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+  scrape_timeout: 10s
+
+# Правила для алертов
+rule_files:
+  - "rules/*.yml"
+
+# Конфигурация алертов
+alerting:
+  alertmanagers:
+    - static_configs:
+        - targets:
+          - alertmanager:9093
+
+# Настройки для внешних метрик
+external_labels:
+  environment: "production"
+  application: "paygo"
+  version: "1.0.0"
+
+# Конфигурация scrape targets
+scrape_configs:
+  # Мониторинг самого Prometheus
+  - job_name: 'prometheus'
+    static_configs:
+      - targets: ['localhost:9090']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+
+  # Мониторинг FastAPI приложения
+  - job_name: 'paygo-backend'
+    static_configs:
+      - targets: ['backend:8000']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+    honor_labels: true
+    metrics_path: '/metrics'
+    
+    # Настройки для аутентификации (если требуется)
+    # authorization:
+    #   type: Bearer
+    #   credentials: "your-token-here"
+    
+    # Настройки для TLS (если используется)
+    # tls_config:
+    #   ca_file: /etc/ssl/certs/ca-certificates.crt
+    #   insecure_skip_verify: false
+
+  # Мониторинг Redis
+  - job_name: 'redis'
+    static_configs:
+      - targets: ['redis:6379']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+    
+    # Redis exporter обычно работает на порту 9121
+    # Если используется redis_exporter, измените target на:
+    # - targets: ['redis-exporter:9121']
+
+  # Мониторинг PostgreSQL
+  - job_name: 'postgresql'
+    static_configs:
+      - targets: ['postgres-exporter:9187']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+
+  # Мониторинг Nginx
+  - job_name: 'nginx'
+    static_configs:
+      - targets: ['nginx-exporter:9113']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+
+  # Мониторинг Node.js (Frontend)
+  - job_name: 'paygo-frontend'
+    static_configs:
+      - targets: ['frontend:3000']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+
+  # Мониторинг системных ресурсов (Node Exporter)
+  - job_name: 'node-exporter'
+    static_configs:
+      - targets: ['node-exporter:9100']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+
+  # Мониторинг Docker контейнеров (cAdvisor)
+  - job_name: 'cadvisor'
+    static_configs:
+      - targets: ['cadvisor:8080']
+    scrape_interval: 15s
+    metrics_path: '/metrics'
+    scrape_timeout: 10s
+
+  # Мониторинг через service discovery (если используется)
+  # - job_name: 'kubernetes-pods'
+  #   kubernetes_sd_configs:
+  #     - role: pod
+  #   relabel_configs:
+  #     - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]
+  #       action: keep
+  #       regex: true
+  #     - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]
+  #       action: replace
+  #       target_label: __metrics_path__
+  #       regex: (.+)
+  #     - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]
+  #       action: replace
+  #       regex: ([^:]+)(?::\d+)?;(\d+)
+  #       replacement: $1:$2
+  #       target_label: __address__
+
+  # Мониторинг через file discovery
+  # - job_name: 'file-discovery'
+  #   file_sd_configs:
+  #     - files:
+  #       - 'targets/*.yml'
+  #       refresh_interval: 5m
+
+# Настройки для remote write (если используется внешняя система)
+# remote_write:
+#   - url: "http://remote-write-endpoint:9090/api/v1/write"
+#     remote_timeout: 30s
+#     write_relabel_configs:
+#       - source_labels: [__name__]
+#         regex: 'up'
+#         action: drop
+
+# Настройки для remote read (если используется внешняя система)
+# remote_read:
+#   - url: "http://remote-read-endpoint:9090/api/v1/read"
+#     remote_timeout: 30s
+#     read_recent: true
+
+# Настройки для storage
+storage:
+  tsdb:
+    # Путь для хранения данных
+    path: /prometheus/data
+    
+    # Время хранения данных
+    retention.time: 30d
+    
+    # Максимальный размер данных
+    retention.size: 50GB
+    
+    # Настройки WAL
+    wal:
+      retention.period: 24h
+      retention.size: 2GB
+
+# Настройки для правил записи
+recording_rules:
+  - name: "paygo:http_requests_total:rate5m"
+    expr: "rate(http_requests_total[5m])"
+    labels:
+      application: "paygo"
+  
+  - name: "paygo:http_request_duration_seconds:p95"
+    expr: "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))"
+    labels:
+      application: "paygo"
+  
+  - name: "paygo:redis_commands_total:rate5m"
+    expr: "rate(redis_commands_processed_total[5m])"
+    labels:
+      application: "paygo"
+  
+  - name: "paygo:postgresql_connections_active"
+    expr: "pg_stat_activity_count"
+    labels:
+      application: "paygo"
+
+# Настройки для алертов
+alerting_rules:
+  - alert: "HighErrorRate"
+    expr: "rate(http_requests_total{status=~\"5..\"}[5m]) > 0.1"
+    for: 2m
+    labels:
+      severity: "warning"
+      application: "paygo"
+    annotations:
+      summary: "High error rate detected"
+      description: "Error rate is {{ $value }} errors per second"
+  
+  - alert: "HighResponseTime"
+    expr: "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m])) > 1"
+    for: 2m
+    labels:
+      severity: "warning"
+      application: "paygo"
+    annotations:
+      summary: "High response time detected"
+      description: "95th percentile response time is {{ $value }} seconds"
+  
+  - alert: "RedisDown"
+    expr: "up{job=\"redis\"} == 0"
+    for: 1m
+    labels:
+      severity: "critical"
+      application: "paygo"
+    annotations:
+      summary: "Redis is down"
+      description: "Redis instance has been down for more than 1 minute"
+  
+  - alert: "PostgreSQLDown"
+    expr: "up{job=\"postgresql\"} == 0"
+    for: 1m
+    labels:
+      severity: "critical"
+      application: "paygo"
+    annotations:
+      summary: "PostgreSQL is down"
+      description: "PostgreSQL instance has been down for more than 1 minute"
+  
+  - alert: "HighMemoryUsage"
+    expr: "(node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes > 0.9"
+    for: 5m
+    labels:
+      severity: "warning"
+      application: "paygo"
+    annotations:
+      summary: "High memory usage"
+      description: "Memory usage is {{ $value | humanizePercentage }}"
+  
+  - alert: "HighCPUUsage"
+    expr: "100 - (avg by(instance) (irate(node_cpu_seconds_total{mode=\"idle\"}[5m])) * 100) > 80"
+    for: 5m
+    labels:
+      severity: "warning"
+      application: "paygo"
+    annotations:
+      summary: "High CPU usage"
+      description: "CPU usage is {{ $value }}%"
+  
+  - alert: "DiskSpaceFilling"
+    expr: "(node_filesystem_size_bytes - node_filesystem_free_bytes) / node_filesystem_size_bytes > 0.85"
+    for: 5m
+    labels:
+      severity: "warning"
+      application: "paygo"
+    annotations:
+      summary: "Disk space filling up"
+      description: "Disk usage is {{ $value | humanizePercentage }}"
+
+# Настройки для внешних метрик
+external_metrics:
+  - name: "paygo_business_metrics"
+    source: "custom_exporter"
+    interval: "1m"
+    labels:
+      application: "paygo"
+      environment: "production"
+
+# Настройки для retention
+retention:
+  # Время хранения для различных типов метрик
+  time_series:
+    default: "30d"
+    high_cardinality: "7d"
+    low_cardinality: "90d"
+  
+  # Размер данных для различных типов метрик
+  size:
+    default: "50GB"
+    high_cardinality: "10GB"
+    low_cardinality: "100GB"
+
+# Настройки для кэширования
+cache:
+  # Размер кэша для метрик
+  metrics_cache_size: "100MB"
+  
+  # Время жизни кэша
+  cache_ttl: "5m"
+
+# Настройки для логирования
+logging:
+  level: "info"
+  format: "json"
+  
+  # Настройки для ротации логов
+  rotation:
+    max_size: "100MB"
+    max_age: "7d"
+    max_backups: 5
+
+# Настройки для безопасности
+security:
+  # Настройки для TLS
+  tls:
+    enabled: false
+    cert_file: "/etc/prometheus/certs/prometheus.crt"
+    key_file: "/etc/prometheus/certs/prometheus.key"
+    ca_file: "/etc/prometheus/certs/ca.crt"
+  
+  # Настройки для аутентификации
+  auth:
+    enabled: false
+    username: "prometheus"
+    password: "secure_password"
+  
+  # Настройки для CORS
+  cors:
+    enabled: true
+    allowed_origins:
+      - "http://localhost:3000"
+      - "https://yourdomain.com" 

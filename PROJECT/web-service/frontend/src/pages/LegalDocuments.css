@@ -1,0 +1,376 @@
+.legal-documents-page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 32px;
+    padding: 24px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 12px;
+    color: white;
+}
+
+.page-header .ant-typography {
+    color: white !important;
+    margin-bottom: 16px !important;
+}
+
+.page-header .ant-typography:last-child {
+    margin-bottom: 0 !important;
+    opacity: 0.9;
+}
+
+.main-content-card {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.legal-documents-tabs {
+    min-height: 600px;
+}
+
+.legal-documents-tabs .ant-tabs-nav {
+    margin-bottom: 24px;
+    padding: 0 24px;
+}
+
+.legal-documents-tabs .ant-tabs-tab {
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.legal-documents-tabs .ant-tabs-tab-active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-radius: 8px 8px 0 0;
+    color: white;
+}
+
+.legal-documents-tabs .ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: white;
+}
+
+.legal-documents-tabs .ant-tabs-ink-bar {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    height: 4px;
+}
+
+/* Document Selector */
+.document-selector {
+    text-align: center;
+    padding: 32px 0;
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 32px;
+}
+
+.document-selector .ant-typography {
+    margin-bottom: 24px !important;
+}
+
+.document-selector .ant-btn {
+    height: 48px;
+    padding: 0 24px;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.document-selector .ant-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.document-selector .ant-btn-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+}
+
+.document-viewer-container {
+    margin-top: 24px;
+}
+
+.no-document-selected {
+    text-align: center;
+    padding: 80px 20px;
+    color: #8c8c8c;
+}
+
+.no-document-selected .ant-typography {
+    margin-bottom: 16px !important;
+}
+
+.no-document-selected .anticon {
+    margin-bottom: 16px;
+}
+
+/* Quick Access */
+.quick-access {
+    padding: 24px 0;
+}
+
+.quick-access .ant-typography {
+    text-align: center;
+    margin-bottom: 32px !important;
+}
+
+.quick-access-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.quick-access-card {
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.quick-access-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.quick-access-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+}
+
+.quick-access-title {
+    margin-bottom: 12px !important;
+    color: #2c3e50;
+}
+
+.quick-access-card .ant-typography:last-child {
+    color: #8c8c8c;
+    font-size: 14px;
+}
+
+/* Modal Customization */
+.ant-modal-content {
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.ant-modal-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border-bottom: none;
+}
+
+.ant-modal-title {
+    color: white !important;
+    font-weight: 600;
+}
+
+.ant-modal-close {
+    color: white;
+}
+
+.ant-modal-close:hover {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+.ant-modal-footer {
+    border-top: 1px solid #f0f0f0;
+    padding: 16px 24px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .legal-documents-page {
+        padding: 10px;
+    }
+    
+    .page-header {
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+    
+    .page-header .ant-typography {
+        font-size: 18px !important;
+    }
+    
+    .legal-documents-tabs .ant-tabs-nav {
+        padding: 0 16px;
+    }
+    
+    .legal-documents-tabs .ant-tabs-tab {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+    
+    .document-selector {
+        padding: 20px 0;
+    }
+    
+    .document-selector .ant-btn {
+        height: 44px;
+        padding: 0 20px;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+    
+    .quick-access-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    
+    .quick-access-card {
+        padding: 16px;
+    }
+    
+    .quick-access-icon {
+        font-size: 36px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page-header .ant-typography {
+        font-size: 16px !important;
+    }
+    
+    .legal-documents-tabs .ant-tabs-tab {
+        padding: 6px 12px;
+        font-size: 12px;
+    }
+    
+    .document-selector .ant-btn {
+        width: 100%;
+        margin-bottom: 12px;
+    }
+    
+    .quick-access-grid {
+        gap: 12px;
+    }
+    
+    .quick-access-card {
+        padding: 12px;
+    }
+    
+    .quick-access-icon {
+        font-size: 32px;
+    }
+}
+
+/* Animation for page load */
+.legal-documents-page {
+    animation: fadeInUp 0.5s ease-out;
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Tab content animation */
+.ant-tabs-tabpane {
+    animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Button hover effects */
+.ant-btn {
+    transition: all 0.3s ease;
+}
+
+.ant-btn:hover {
+    transform: translateY(-1px);
+}
+
+.ant-btn:active {
+    transform: translateY(0);
+}
+
+/* Card hover effects */
+.ant-card {
+    transition: all 0.3s ease;
+}
+
+.ant-card:hover {
+    transform: translateY(-2px);
+}
+
+/* Icon animations */
+.anticon {
+    transition: all 0.3s ease;
+}
+
+.quick-access-card:hover .anticon {
+    transform: scale(1.1);
+}
+
+/* Loading states */
+.ant-spin {
+    transition: all 0.3s ease;
+}
+
+.ant-spin:hover {
+    transform: scale(1.05);
+}
+
+/* Focus states for accessibility */
+.ant-btn:focus,
+.ant-card:focus,
+.ant-tabs-tab:focus {
+    outline: 2px solid #1890ff;
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .legal-documents-page {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .page-header {
+        background: none !important;
+        color: #000 !important;
+        border: 2px solid #000;
+    }
+    
+    .page-header .ant-typography {
+        color: #000 !important;
+    }
+    
+    .main-content-card {
+        box-shadow: none;
+        border: 1px solid #000;
+    }
+    
+    .ant-tabs-nav {
+        display: none;
+    }
+    
+    .ant-tabs-tabpane {
+        display: block !important;
+        opacity: 1 !important;
+    }
+    
+    .quick-access,
+    .document-selector {
+        display: none;
+    }
+}

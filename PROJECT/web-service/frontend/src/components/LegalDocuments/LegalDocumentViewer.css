@@ -1,0 +1,254 @@
+.legal-document-viewer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.legal-document-card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.document-header {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 24px;
+    margin: -24px -24px 0 -24px;
+}
+
+.document-title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.document-title {
+    margin: 0 !important;
+    color: #2c3e50;
+    flex: 1;
+    min-width: 300px;
+}
+
+.document-meta {
+    margin-top: 16px;
+}
+
+.document-content {
+    padding: 24px 0;
+    line-height: 1.8;
+}
+
+.document-html-content {
+    font-size: 16px;
+    color: #2c3e50;
+}
+
+.document-html-content h1,
+.document-html-content h2,
+.document-html-content h3,
+.document-html-content h4 {
+    color: #ff6b35;
+    margin: 24px 0 16px 0;
+    font-weight: 600;
+}
+
+.document-html-content h1 {
+    font-size: 28px;
+    border-bottom: 2px solid #ff6b35;
+    padding-bottom: 8px;
+}
+
+.document-html-content h2 {
+    font-size: 24px;
+    border-left: 4px solid #ff6b35;
+    padding-left: 16px;
+}
+
+.document-html-content h3 {
+    font-size: 20px;
+    color: #34495e;
+}
+
+.document-html-content h4 {
+    font-size: 18px;
+    color: #34495e;
+}
+
+.document-html-content p {
+    margin-bottom: 16px;
+    text-align: justify;
+}
+
+.document-html-content ul,
+.document-html-content ol {
+    margin-bottom: 16px;
+    padding-left: 24px;
+}
+
+.document-html-content li {
+    margin-bottom: 8px;
+}
+
+.document-html-content strong {
+    color: #2c3e50;
+    font-weight: 600;
+}
+
+.document-html-content em {
+    color: #7f8c8d;
+    font-style: italic;
+}
+
+.document-html-content blockquote {
+    border-left: 4px solid #3498db;
+    padding-left: 16px;
+    margin: 16px 0;
+    background-color: #f8f9fa;
+    padding: 16px;
+    border-radius: 4px;
+}
+
+.document-actions {
+    background-color: #f8f9fa;
+    padding: 24px;
+    margin: 0 -24px -24px -24px;
+    border-top: 1px solid #e9ecef;
+}
+
+.accept-section {
+    text-align: center;
+}
+
+.accept-button {
+    height: 48px;
+    padding: 0 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+}
+
+.accept-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(255, 107, 53, 0.4);
+}
+
+.legal-document-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.legal-document-loading .ant-spin {
+    margin-bottom: 16px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .legal-document-viewer {
+        padding: 10px;
+    }
+    
+    .document-header {
+        padding: 16px;
+        margin: -16px -16px 0 -16px;
+    }
+    
+    .document-title-section {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .document-title {
+        min-width: auto;
+        text-align: center;
+    }
+    
+    .document-meta {
+        text-align: center;
+    }
+    
+    .document-content {
+        padding: 16px 0;
+    }
+    
+    .document-actions {
+        padding: 16px;
+        margin: 0 -16px -16px -16px;
+    }
+    
+    .accept-button {
+        width: 100%;
+        height: 44px;
+        padding: 0 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .document-html-content h1 {
+        font-size: 24px;
+    }
+    
+    .document-html-content h2 {
+        font-size: 20px;
+    }
+    
+    .document-html-content h3 {
+        font-size: 18px;
+    }
+    
+    .document-html-content h4 {
+        font-size: 16px;
+    }
+    
+    .document-html-content {
+        font-size: 14px;
+    }
+}
+
+/* Print styles */
+@media print {
+    .legal-document-viewer {
+        padding: 0;
+        max-width: none;
+    }
+    
+    .legal-document-card {
+        box-shadow: none;
+        border: none;
+    }
+    
+    .document-header {
+        background: none !important;
+        padding: 0 0 20px 0;
+        margin: 0 0 20px 0;
+        border-bottom: 2px solid #333;
+    }
+    
+    .document-actions {
+        display: none;
+    }
+    
+    .document-html-content {
+        font-size: 12pt;
+        line-height: 1.4;
+    }
+    
+    .document-html-content h1,
+    .document-html-content h2,
+    .document-html-content h3,
+    .document-html-content h4 {
+        color: #000;
+        page-break-after: avoid;
+    }
+    
+    .document-html-content p {
+        page-break-inside: avoid;
+    }
+}

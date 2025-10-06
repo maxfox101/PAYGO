@@ -1,0 +1,105 @@
+# FastAPI и основные зависимости
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+python-jose[cryptography]==3.3.0
+passlib[bcrypt]==1.7.4
+python-decouple==3.8
+
+# База данных
+sqlalchemy==2.0.23
+databases[postgresql]==0.8.0
+psycopg2-binary==2.9.9
+alembic==1.13.1
+
+# HTTP клиенты и сетевые запросы
+httpx==0.25.2
+aiohttp==3.9.1
+requests==2.31.0
+
+# Валидация данных
+pydantic==2.5.0
+pydantic-settings==2.1.0
+email-validator==2.1.0
+
+# Безопасность и аутентификация
+cryptography==41.0.8
+bcrypt==4.1.2
+PyJWT==2.8.0
+
+# Работа с изображениями и файлами
+Pillow==10.1.0
+python-magic==0.4.27
+
+# WebSocket поддержка
+websockets==12.0
+
+# Мониторинг и логирование
+prometheus-client==0.19.0
+structlog==23.2.0
+
+# Кеширование
+redis==5.0.1
+aioredis==2.0.1
+
+# Работа с датами и временем
+python-dateutil==2.8.2
+pytz==2023.3
+
+# Валидация и сериализация
+marshmallow==3.20.2
+orjson==3.9.10
+
+# Тестирование
+pytest==7.4.3
+pytest-asyncio==0.21.1
+httpx==0.25.2
+
+# CORS и middleware
+starlette==0.27.0
+
+# Биометрия (опционально)
+opencv-python==4.8.1.78
+numpy==1.24.4
+
+# Работа с Excel/CSV (для экспорта)
+openpyxl==3.1.2
+pandas==2.1.4
+
+# Email уведомления
+aiosmtplib==3.0.1
+jinja2==3.1.2
+
+# QR коды
+qrcode[pil]==7.4.2
+
+# Работа с ZIP архивам
+zipfile-deflate64==0.2.0
+
+# Планировщик задач
+celery==5.3.4
+flower==2.0.1
+
+# Метрики и мониторинг
+psutil==5.9.6
+
+# Конфигурация
+pyyaml==6.0.1
+toml==0.10.2
+
+# Дополнительные утилиты
+click==8.1.7
+rich==13.7.0
+typer==0.9.0
+
+# Новые зависимости для созданных модулей
+aiofiles==23.2.1  # Для асинхронной работы с файлами (backup_manager)
+web-push==1.1.0   # Для веб-push уведомлений
+firebase-admin==6.2.0  # Для FCM push уведомлений
+
+# Безопасность и двухфакторная аутентификация
+pyotp==2.9.0      # TOTP (Time-based One-Time Password)
+qrcode[pil]==7.4.2  # Генерация QR кодов для TOTP
+cryptography==41.0.8  # Шифрование и безопасность
+passlib[bcrypt]==1.7.4  # Хеширование паролей
+python-jose[cryptography]==3.3.0  # JWT токены 

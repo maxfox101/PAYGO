@@ -1,0 +1,87 @@
+/* Базовая палитра */
+:root {
+	--brand-orange: #ff6b35;
+	--brand-orange-600: #f4581c;
+	--brand-black: #121212;
+	--brand-white: #ffffff;
+	--border: #eceef1;
+	--text: #1a202c;
+	--muted: #667085;
+}
+
+html,
+body {
+	background: var(--brand-white);
+	color: var(--text);
+}
+
+.app-root {
+	display: flex;
+	min-height: 100vh;
+	background: var(--brand-white);
+}
+
+.app-content {
+	flex: 1;
+	padding: 24px;
+	margin-left: 280px; /* ширина сайдбара */
+	background: var(--brand-white);
+}
+
+/* Карточки и сетка */
+.card {
+	background: var(--brand-white);
+	border: 1px solid var(--border);
+	border-radius: 12px;
+	padding: 24px;
+}
+
+.grid {
+	display: grid;
+	gap: 16px;
+}
+.grid-3 {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+.grid-4 {
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+/* Кнопки */
+.btn {
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	height: 40px;
+	padding: 0 16px;
+	border-radius: 10px;
+	border: 1px solid var(--brand-orange);
+	color: var(--brand-white);
+	background: var(--brand-orange);
+	cursor: pointer;
+	text-decoration: none;
+}
+
+.btn:hover {
+	background: var(--brand-orange-600);
+}
+
+/* Утилиты */
+.text-muted {
+	color: var(--muted);
+}
+.separator {
+	height: 1px;
+	background: var(--border);
+	margin: 16px 0;
+}
+
+/* Сброс старых стилей */
+.App,
+.header,
+.dashboard,
+.stats,
+.item,
+.status {
+	all: unset;
+}
